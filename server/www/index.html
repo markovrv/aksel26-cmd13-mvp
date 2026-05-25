@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>ESP32 Tank Robot — Proxy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- Статус-бар -->
+  <div id="status-bar">
+    <span id="status-text">🔴 Отключено</span>
+    <span id="admin-link-wrap">
+      <a href="#" id="btn-admin" class="admin-link">🔑 Стать администратором</a>
+    </span>
+  </div>
+
+  <!-- Форма входа (представление) -->
+  <div id="join-form">
+    <div id="join-form-inner">
+      <h3>🚗 Добро пожаловать</h3>
+      <p class="join-desc">Представьтесь, чтобы присоединиться к трансляции</p>
+      <div id="join-input-row">
+        <input type="text" id="join-name" placeholder="Ваше имя" autocomplete="off" maxlength="30">
+        <button id="join-btn">Войти</button>
+      </div>
+      <div id="join-error"></div>
+    </div>
+  </div>
+
+  <!-- Основной контент (скрыт до входа) -->
+  <div id="main-content" class="hidden">
+    <div id="columns">
+      <!-- Левая колонка: видео + управление поверх -->
+      <div id="col-video">
+        <div id="video-wrap">
+          <img id="stream" src="" alt="Camera stream">
+          <div id="overlay-info"><span id="speed-label">L: 0% | R: 0%</span></div>
+          <!-- Управление (только для администратора) — поверх видео -->
+          <div id="controls" class="hidden">
+            <div id="joystick-zone"></div>
+            <div id="side-panel">
+              <button id="btn-flash" class="icon-btn" title="Вспышка">💡</button>
+              <button id="btn-settings" class="icon-btn" title="Настройки">⚙️</button>
+            </div>
+            <div id="keyboard-hint">W A S D — управление с клавиатуры</div>
+          </div>
+        </div>
+        <!-- Панель администратора (IP робота) — под видео -->
+        <div id="admin-panel" class="hidden">
+          <div id="admin-panel-inner">
+            <h4>⚙️ Панель администратора</h4>
+            <div id="esp32-ip-row">
+              <label for="esp32-ip">IP адрес робота:</label>
+              <input type="text" id="esp32-ip" placeholder="192.168.4.1" autocomplete="off">
+              <button id="esp32-ip-btn">Применить</button>
+            </div>
+            <div id="esp32-ip-status"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Правая колонка: чат -->
+      <div id="col-chat">
+        <div id="chat-wrap">
+          <div id="chat-messages"></div>
+          <div id="chat-input-row">
+            <input type="text" id="chat-input" placeholder="Сообщение..." maxlength="300" autocomplete="off" />
+            <button id="chat-send-btn">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Настройки (модальное окно) -->
+    <div id="settings-panel" class="hidden">
+      <h3>Настройки</h3>
+      <label>Разгон (мс/шаг): <span id="accel-val">20</span></label>
+      <input type="range" id="accel" min="5" max="100" value="20">
+      <label>Качество JPEG: <span id="quality-val">12</span></label>
+      <input type="range" id="quality" min="4" max="63" value="12">
+      <label>Разрешение:</label>
+      <select id="framesize">
+        <option value="5" selected>QVGA 320×240</option>
+        <option value="6">CIF  400×296</option>
+        <option value="7">HVGA 480×320</option>
+        <option value="8">VGA  640×480</option>
+      </select>
+      <label>Яркость: <span id="brightness-val">0</span></label>
+      <input type="range" id="brightness" min="-2" max="2" value="0">
+      <label>Контраст: <span id="contrast-val">0</span></label>
+      <input type="range" id="contrast" min="-2" max="2" value="0">
+      <label>FPS: <span id="fps-val">20</span></label>
+      <input type="range" id="fps" min="1" max="30" value="20">
+      <button id="btn-apply">Применить</button>
+      <button id="btn-close-settings">Закрыть</button>
+    </div>
+  </div>
+
+  <!-- Скрытый canvas для QR-сканера (анализ MJPEG-стрима) -->
+  <canvas id="qr-canvas" style="display:none;"></canvas>
+
+  <!-- Форма авторизации администратора (модальное окно) -->
+  <div id="auth-form" class="hidden">
+    <div id="auth-form-inner">
+      <h3>🔐 Авторизация администратора</h3>
+      <p class="auth-desc">Введите пароль для получения прав управления роботом</p>
+      <div id="auth-input-row">
+        <input type="password" id="auth-password" placeholder="Пароль" autocomplete="off">
+        <button id="auth-btn">Войти как Admin</button>
+      </div>
+      <div id="auth-error"></div>
+      <button id="auth-cancel" class="auth-cancel-btn">Отмена</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="nipplejs.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

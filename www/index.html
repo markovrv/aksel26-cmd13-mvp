@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>ESP32 Tank Robot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div id="video-wrap">
+    <img id="stream" src="" alt="Camera stream">
+    <div id="overlay-info"><span id="speed-label">L: 0% | R: 0%</span></div>
+  </div>
+  <div id="controls">
+    <div id="joystick-zone"></div>
+    <div id="side-panel">
+      <button id="btn-flash" class="icon-btn" title="Вспышка">💡</button>
+      <button id="btn-settings" class="icon-btn" title="Настройки">⚙️</button>
+    </div>
+    <div id="keyboard-hint">W A S D — управление с клавиатуры</div>
+  </div>
+  <div id="settings-panel" class="hidden">
+    <h3>Настройки</h3>
+    <label>Разгон (мс/шаг): <span id="accel-val">20</span></label>
+    <input type="range" id="accel" min="5" max="100" value="20">
+    <label>Качество JPEG: <span id="quality-val">12</span></label>
+    <input type="range" id="quality" min="4" max="63" value="12">
+    <label>Разрешение:</label>
+    <select id="framesize">
+      <option value="5" selected>QVGA 320×240</option>
+      <option value="6">CIF  400×296</option>
+      <option value="7">HVGA 480×320</option>
+      <option value="8">VGA  640×480</option>
+    </select>
+    <label>Яркость: <span id="brightness-val">0</span></label>
+    <input type="range" id="brightness" min="-2" max="2" value="0">
+    <label>Контраст: <span id="contrast-val">0</span></label>
+    <input type="range" id="contrast" min="-2" max="2" value="0">
+    <label>FPS: <span id="fps-val">20</span></label>
+    <input type="range" id="fps" min="1" max="30" value="20">
+    <button id="btn-apply">Применить</button>
+    <button id="btn-close-settings">Закрыть</button>
+  </div>
+</div>
+<script src="nipplejs.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

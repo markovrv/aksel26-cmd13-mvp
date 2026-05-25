@@ -1,0 +1,71 @@
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0d0d0d; color: #eee;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100dvh; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+#app { display: flex; flex-direction: column; height: 100%; }
+
+#video-wrap {
+  flex: 1; position: relative; background: #111;
+  display: flex; align-items: center; justify-content: center; min-height: 0;
+}
+#stream { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; transform: rotate(90deg); }
+#overlay-info {
+  position: absolute; top: 8px; left: 8px;
+  background: rgba(0,0,0,.55); padding: 4px 10px;
+  border-radius: 20px; font-size: 12px; letter-spacing: .5px;
+}
+
+#controls {
+  height: 220px; min-height: 220px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px; background: #161616;
+  border-top: 1px solid #2a2a2a;
+}
+#joystick-zone { width: 180px; height: 180px; position: relative; }
+#side-panel { display: flex; flex-direction: column; gap: 14px; }
+#keyboard-hint {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  color: #555; font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; user-select: none;
+  background: rgba(0,0,0,.4); padding: 4px 14px; border-radius: 12px;
+}
+#controls { position: relative; }
+
+.icon-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 2px solid #333; background: #1e1e1e;
+  font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s;
+}
+.icon-btn:active, .icon-btn.active { background: #2e7d32; border-color: #43a047; }
+
+#settings-panel {
+  position: fixed; bottom: 0; right: 0;
+  width: min(340px, 100vw); background: #1a1a2e;
+  border-top-left-radius: 16px; border: 1px solid #333;
+  padding: 20px; z-index: 100;
+  display: flex; flex-direction: column; gap: 10px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,.6);
+}
+#settings-panel h3 { font-size: 16px; color: #90caf9; margin-bottom: 4px; }
+#settings-panel label { font-size: 13px; color: #aaa; }
+#settings-panel input[type=range], #settings-panel select {
+  width: 100%; accent-color: #42a5f5;
+  background: #0d0d0d; color: #eee;
+  border: 1px solid #333; border-radius: 6px; padding: 4px;
+}
+#btn-apply {
+  background: #1565c0; color: #fff; border: none;
+  border-radius: 8px; padding: 10px; font-size: 14px; cursor: pointer;
+}
+#btn-apply:hover { background: #1976d2; }
+#btn-close-settings {
+  background: #333; color: #ccc; border: none;
+  border-radius: 8px; padding: 8px; font-size: 13px; cursor: pointer;
+}
+.hidden { display: none !important; }
